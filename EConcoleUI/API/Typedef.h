@@ -4,6 +4,26 @@
 
 __NamespaceOnce
 
+#pragma region Define Block
+#define ___PropertyCName(Type, Name) __##Name##Type##Property
+#define __PropertyCDef(Type, Name) ___PropertyCName(Type, Name) Name;
+#define __PropertyC(Type, Name, Setter, Getter) \
+class ___PropertyCName(Type, Name)\
+{ \
+public: \
+	___PropertyCName(Type, Name) operator=(Type value) \
+	{ \
+		Setter; \
+	} \
+	operator Type() \
+	{ \
+		Getter; \
+	} \
+private: \
+	Type m_value; \
+};
+
+
 #define __Property_All(Type, SRTy, Name, AN) \
 Type Get##Name(); \
 SRTy Set##Name(Type AN);
@@ -27,23 +47,21 @@ Type Get##Name();
 #define __GSII(SRTy, ITy, InTy, MN, InN, InAN, IN1, IN2, IAN1, IAN2) \
 __Property_All(ITy, SRTy, MN##IN1, IAN1) \
 __Property_All(ITy, SRTy, MN##IN2, IAN2) \
-__Property_All(ITy, SRTy, MN##InN, InAN) \
+__Property_All(ITy, SRTy, MN##InN, InAN)
 
-typedef bool Status;
-typedef int Error;
-
-#define __TypedefMultipleName(Type, ...) typedef Type __VA_ARGS__;
-
-#define __Vector2(Name, V1n, V2n, Type) \
-struct Name\
+#define __Vector2(V1n, V2n, Type, Name, ...) \
+typedef struct Name\
 { \
 	Type V1n; \
 	Type V2n; \
-};
+} __VA_ARGS__;
+#pragma endregion
 
+typedef bool Status;
+typedef int Error;
 typedef RangeValue<int, 0, 1024> Size, Pos;
 
-__Vector2(Rect, Width, Height, Size);
-__TypedefMultipleName(Rect, Location);
+__Vector2(Width, Height, Size, Rect, Location);
+
 
 __NamespaceEnd
