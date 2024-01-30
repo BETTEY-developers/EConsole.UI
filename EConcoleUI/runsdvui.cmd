@@ -1,0 +1,2 @@
+cd /d "C:\Users\Administrator.DESKTOP-38EEGUF\source\repos\ConsoleUI\EConcoleUI" &msbuild "EConcoleUI.vcxproj" /t:sdvViewer /p:configuration="Debug" /p:platform="x64" /p:SolutionDir="C:\Users\Administrator.DESKTOP-38EEGUF\source\repos\ConsoleUI" 
+exit %errorlevel% 
